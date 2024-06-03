@@ -8,6 +8,7 @@ import com.bandhu.myapplication.database.RoomRepository
 import com.bandhu.myapplication.feature.post.model.PostResponse
 import com.bandhu.myapplication.repository.RemoteRepository
 import com.example.ride.retrofit.RemoteApiGeneralResponse
+import timber.log.Timber
 
 class ScheduleWorker(private val context: Context, params: WorkerParameters) :
     CoroutineWorker(context, params) {
@@ -24,6 +25,7 @@ class ScheduleWorker(private val context: Context, params: WorkerParameters) :
                 //save to local db
                 it.data?.let { data ->
                     //saved
+                    Timber.v("data ${data.posts}")
 
                 }
             }

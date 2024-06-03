@@ -19,7 +19,6 @@ import kotlinx.coroutines.launch
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var appDatabase: AppDatabase
-    private lateinit var adapter: PostPageAdapter
     private val viewModel: PostVm by viewModels {
         PostViewModelFactory(
             application, appDatabase,
@@ -37,7 +36,7 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        viewModel.loadPosts()
+
 
         lifecycleScope.launch {
             delay(3000)

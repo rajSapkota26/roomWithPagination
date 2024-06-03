@@ -1,15 +1,17 @@
 package com.bandhu.myapplication.feature.post.screen
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
+import android.widget.Toast
 import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
+import androidx.paging.CombinedLoadStates
+import androidx.paging.LoadState
 import androidx.work.PeriodicWorkRequest
 import androidx.work.WorkManager
-import com.bandhu.myapplication.R
 import com.bandhu.myapplication.database.AppDatabase
 import com.bandhu.myapplication.database.RoomRepository
-import com.bandhu.myapplication.databinding.ActivityMainBinding
 import com.bandhu.myapplication.databinding.ActivityPostBinding
 import com.bandhu.myapplication.feature.post.adapter.MainAdapter
 import com.bandhu.myapplication.feature.post.adapter.PostPageAdapter
@@ -27,11 +29,10 @@ class PostActivity : AppCompatActivity() {
     private lateinit var adapter: PostPageAdapter
     private val viewModel: PostVm by viewModels {
         PostViewModelFactory(
-            application, appDatabase,
+            application,
+            appDatabase,
             RemoteRepository.getInstance(application),
-            RoomRepository.getInstance(
-                application
-            )
+            RoomRepository.getInstance(application)
         )
     }
 
@@ -41,10 +42,12 @@ class PostActivity : AppCompatActivity() {
 
         binding = ActivityPostBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        viewModel.loadPosts()
         adapter = PostPageAdapter()
         binding.recyclerView.adapter = adapter.withLoadStateFooter(
             MainAdapter()
         )
+
 
         loadData()
         startWorker()
@@ -52,9 +55,35 @@ class PostActivity : AppCompatActivity() {
 
     private fun loadData() {
         lifecycleScope.launch {
-            viewModel.data.collectLatest { pagingData ->
-                adapter.submitData(pagingData)
+            adapter.addLoadStateListener { loadState ->
+                loadState.decideOnState(
+                    showLoading = { visible ->
+                        binding.progress.visibility=View.VISIBLE
+
+                    },
+                    showEmptyState = { visible ->
+//                        Toast.makeText(this@PostActivity, "No Data Found", Toast.LENGTH_SHORT).show()
+                        binding.progress.visibility=View.GONE
+                                     },
+                    showError = { message ->
+                        Toast.makeText(this@PostActivity, message, Toast.LENGTH_SHORT).show()
+                        binding.progress.visibility=View.GONE
+                    }
+                )
             }
+        }
+        viewModel.list.observe(this@PostActivity) { response ->
+            response?.let {
+                lifecycleScope.launch {
+                    viewModel.data.collectLatest { pagingData ->
+                        binding.progress.visibility=View.GONE
+                        adapter.submitData(pagingData)
+                    }
+                }
+
+
+            }
+
 
         }
     }
@@ -67,5 +96,27 @@ class PostActivity : AppCompatActivity() {
         WorkManager.getInstance(this).enqueue(periodicWorkRequest)
 
 
+    }
+    private inline fun CombinedLoadStates.decideOnState(
+        showLoading: (Boolean) -> Unit,
+        showEmptyState: (Boolean) -> Unit,
+        showError: (String) -> Unit
+    ) {
+        showLoading(refresh is LoadState.Loading)
+
+        showEmptyState(
+            source.append is LoadState.NotLoading
+                    && source.append.endOfPaginationReached
+                    && adapter.itemCount == 0
+        )
+
+        val errorState = source.append as? LoadState.Error
+            ?: source.prepend as? LoadState.Error
+            ?: source.refresh as? LoadState.Error
+            ?: append as? LoadState.Error
+            ?: prepend as? LoadState.Error
+            ?: refresh as? LoadState.Error
+
+        errorState?.let { showError(it.error.toString()) }
     }
 }
