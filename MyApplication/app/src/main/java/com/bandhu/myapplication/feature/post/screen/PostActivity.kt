@@ -41,9 +41,6 @@ class PostActivity : AppCompatActivity() {
 
         binding = ActivityPostBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-        viewModel.loadPosts()
-
         adapter = PostPageAdapter()
         binding.recyclerView.adapter = adapter.withLoadStateFooter(
             MainAdapter()
@@ -52,6 +49,7 @@ class PostActivity : AppCompatActivity() {
         loadData()
         startWorker()
     }
+
     private fun loadData() {
         lifecycleScope.launch {
             viewModel.data.collectLatest { pagingData ->

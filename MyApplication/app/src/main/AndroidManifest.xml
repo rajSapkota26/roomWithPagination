@@ -20,7 +20,7 @@
             android:name=".feature.post.screen.PostActivity"
             android:exported="false" />
         <activity
-            android:name=".feature.post.screen.MainActivity"
+            android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

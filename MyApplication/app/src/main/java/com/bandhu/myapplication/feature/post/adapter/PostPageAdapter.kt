@@ -27,7 +27,9 @@ class PostPageAdapter:PagingDataAdapter<PostEntity, PostPageAdapter.PostViewHold
         val item = getItem(position)
 
         holder.binding.apply {
-            textView.text = item?.body
+            tvBody.text = item?.body
+            tvTitle.text = item?.title
+            tvViews.text = "Views: ${item?.views}"
         }
     }
 
