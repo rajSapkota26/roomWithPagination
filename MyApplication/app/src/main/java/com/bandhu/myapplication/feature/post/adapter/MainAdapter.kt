@@ -1,4 +1,4 @@
-package com.bandhu.myapplication.feature.adapter
+package com.bandhu.myapplication.feature.post.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -23,5 +23,6 @@ class MainAdapter : LoadStateAdapter<MainAdapter.LoadStateViewHolder>() {
         holder.binding.apply {
             progress.isVisible = loadState is LoadState.Loading
         }
+
     }
 }

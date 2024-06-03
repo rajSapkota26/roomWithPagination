@@ -5,7 +5,7 @@ import android.content.Context
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
 import com.bandhu.myapplication.database.RoomRepository
-import com.bandhu.myapplication.feature.model.PostResponse
+import com.bandhu.myapplication.feature.post.model.PostResponse
 import com.bandhu.myapplication.repository.RemoteRepository
 import com.example.ride.retrofit.RemoteApiGeneralResponse
 
@@ -23,7 +23,7 @@ class ScheduleWorker(private val context: Context, params: WorkerParameters) :
             if (it.status == RemoteApiGeneralResponse.Status.SUCCESS) {
                 //save to local db
                 it.data?.let { data ->
-                    savePost(data, RoomRepository.getInstance(context),context)
+                    //saved
 
                 }
             }
@@ -32,15 +32,6 @@ class ScheduleWorker(private val context: Context, params: WorkerParameters) :
 
     }
 
-    private suspend fun savePost(
-        data: PostResponse,
-        repository: RoomRepository,
-        context: Application
-    ) {
-        repository.savePost(data)
 
-
-
-    }
 
 }

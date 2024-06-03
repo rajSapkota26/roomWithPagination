@@ -5,8 +5,8 @@ import android.content.Context
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.liveData
-import com.bandhu.myapplication.feature.model.PostPagingSource
-import com.bandhu.myapplication.feature.model.PostResponse
+import com.bandhu.myapplication.feature.post.model.PostPagingSource
+import com.bandhu.myapplication.feature.post.model.PostResponse
 import com.bandhu.myapplication.repository.RemoteRepository
 import com.example.ride.retrofit.NetworkModule
 
@@ -54,7 +54,9 @@ class RoomRepository private constructor(
 
     }
 
-     suspend fun getPagingPosts(): PostPagingSource {
+      fun getPagingPosts(): PostPagingSource {
+
+
        return PostPagingSource(database);
 
      }

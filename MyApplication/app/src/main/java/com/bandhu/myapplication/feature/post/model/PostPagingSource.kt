@@ -1,4 +1,4 @@
-package com.bandhu.myapplication.feature.model
+package com.bandhu.myapplication.feature.post.model
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
@@ -23,6 +23,11 @@ class PostPagingSource(private val appDatabase: AppDatabase) : PagingSource<Int,
 
             val pagedList =
                 appDatabase.postDao().getPagedList(params.loadSize, page * params.loadSize)
+
+            if (pagedList.isEmpty()){
+
+            }
+
 
 
 

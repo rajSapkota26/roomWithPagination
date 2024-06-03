@@ -1,4 +1,4 @@
-package com.bandhu.myapplication.feature.adapter
+package com.bandhu.myapplication.feature.post.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -8,9 +8,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bandhu.myapplication.database.PostEntity
 import com.bandhu.myapplication.database.PostWithTags
 import com.bandhu.myapplication.databinding.PostItemBinding
-import com.bandhu.myapplication.feature.model.PostResponse
+import com.bandhu.myapplication.feature.post.model.PostResponse
 
-class PostPageAdapter:PagingDataAdapter<PostEntity,PostPageAdapter.PostViewHolder>(DIFF_CALLBACK) {
+class PostPageAdapter:PagingDataAdapter<PostEntity, PostPageAdapter.PostViewHolder>(DIFF_CALLBACK) {
 
 
     companion object {
@@ -35,6 +35,11 @@ class PostPageAdapter:PagingDataAdapter<PostEntity,PostPageAdapter.PostViewHolde
         parent: ViewGroup,
         viewType: Int
     ): PostViewHolder {
+
+
+
+
+
         return PostViewHolder(
             PostItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         )

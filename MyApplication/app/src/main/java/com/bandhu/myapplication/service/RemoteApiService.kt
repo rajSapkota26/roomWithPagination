@@ -1,6 +1,6 @@
 package com.bandhu.myapplication.service
 
-import com.bandhu.myapplication.feature.model.PostResponse
+import com.bandhu.myapplication.feature.post.model.PostResponse
 import com.bandhu.myapplication.retrofit.DefaultResponse
 import retrofit2.Response
 import retrofit2.http.GET
@@ -11,6 +11,7 @@ interface RemoteApiService {
 
     @GET("posts")
     suspend fun sendFindPostsRequest(@Query("limit")limit:Int,@Query("skip")skip:Int): Response<PostResponse>
+    @GET("posts")
     suspend fun sendFindAllPostsRequest(): Response<PostResponse>
 
 

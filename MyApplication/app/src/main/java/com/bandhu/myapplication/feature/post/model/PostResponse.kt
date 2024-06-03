@@ -1,4 +1,4 @@
-package com.bandhu.myapplication.feature.model
+package com.bandhu.myapplication.feature.post.model
 
 import com.google.gson.annotations.SerializedName
 
