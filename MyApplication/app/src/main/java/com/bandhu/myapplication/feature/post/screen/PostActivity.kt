@@ -89,7 +89,7 @@ class PostActivity : AppCompatActivity() {
     }
 
     private fun startWorker() {
-        // Create a OneTimeWorkRequest
+        // Create a periodicWorkRequest
         val periodicWorkRequest =
             PeriodicWorkRequest.Builder(ScheduleWorker::class.java, 15, TimeUnit.MINUTES).build()
         // Enqueue the work
