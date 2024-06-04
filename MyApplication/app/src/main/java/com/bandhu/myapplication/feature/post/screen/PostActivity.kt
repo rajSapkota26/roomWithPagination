@@ -59,7 +59,7 @@ class PostActivity : AppCompatActivity() {
 
                     },
                     showEmptyState = { visible ->
-                        Toast.makeText(this@PostActivity, visible.toString(), Toast.LENGTH_SHORT).show()
+//                        Toast.makeText(this@PostActivity, visible.toString(), Toast.LENGTH_SHORT).show()
                         binding.progress.visibility=View.GONE
                                      },
                     showError = { message ->
