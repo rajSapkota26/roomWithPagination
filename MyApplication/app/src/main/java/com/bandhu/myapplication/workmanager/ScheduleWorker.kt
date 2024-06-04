@@ -4,10 +4,8 @@ import android.app.Application
 import android.content.Context
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
-import com.bandhu.myapplication.database.RoomRepository
-import com.bandhu.myapplication.feature.post.model.PostResponse
 import com.bandhu.myapplication.repository.RemoteRepository
-import com.example.ride.retrofit.RemoteApiGeneralResponse
+import com.bandhu.myapplication.retrofit.RemoteApiGeneralResponse
 import timber.log.Timber
 
 class ScheduleWorker(private val context: Context, params: WorkerParameters) :

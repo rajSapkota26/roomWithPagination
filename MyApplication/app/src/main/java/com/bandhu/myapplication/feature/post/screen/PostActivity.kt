@@ -11,7 +11,6 @@ import androidx.paging.LoadState
 import androidx.work.PeriodicWorkRequest
 import androidx.work.WorkManager
 import com.bandhu.myapplication.database.AppDatabase
-import com.bandhu.myapplication.database.RoomRepository
 import com.bandhu.myapplication.databinding.ActivityPostBinding
 import com.bandhu.myapplication.feature.post.adapter.MainAdapter
 import com.bandhu.myapplication.feature.post.adapter.PostPageAdapter
@@ -29,10 +28,8 @@ class PostActivity : AppCompatActivity() {
     private lateinit var adapter: PostPageAdapter
     private val viewModel: PostVm by viewModels {
         PostViewModelFactory(
-            application,
             appDatabase,
-            RemoteRepository.getInstance(application),
-            RoomRepository.getInstance(application)
+            RemoteRepository.getInstance(application)
         )
     }
 
@@ -57,12 +54,12 @@ class PostActivity : AppCompatActivity() {
         lifecycleScope.launch {
             adapter.addLoadStateListener { loadState ->
                 loadState.decideOnState(
-                    showLoading = { visible ->
+                    showLoading = {
                         binding.progress.visibility=View.VISIBLE
 
                     },
                     showEmptyState = { visible ->
-//                        Toast.makeText(this@PostActivity, "No Data Found", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this@PostActivity, visible.toString(), Toast.LENGTH_SHORT).show()
                         binding.progress.visibility=View.GONE
                                      },
                     showError = { message ->
@@ -72,6 +69,8 @@ class PostActivity : AppCompatActivity() {
                 )
             }
         }
+        //need to declare if user use app first time we user first call from server after second use room db
+        //at this time we have already data in room db so worker handle
         viewModel.list.observe(this@PostActivity) { response ->
             response?.let {
                 lifecycleScope.launch {

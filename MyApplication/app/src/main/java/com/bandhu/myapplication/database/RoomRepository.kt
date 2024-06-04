@@ -11,7 +11,6 @@ import com.bandhu.myapplication.repository.RemoteRepository
 import com.example.ride.retrofit.NetworkModule
 
 class RoomRepository private constructor(
-    private val applicationContext: Context,
     private val database: AppDatabase,
 ) {
     companion object {
@@ -20,7 +19,6 @@ class RoomRepository private constructor(
         fun getInstance(application: Application): RoomRepository {
             return instance ?: synchronized(this) {
                 instance ?: RoomRepository(
-                    application.applicationContext,
                     AppDatabase.getDatabase(application.applicationContext)
                 ).also { instance = it }
             }

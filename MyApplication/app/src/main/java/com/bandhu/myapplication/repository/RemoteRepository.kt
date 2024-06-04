@@ -4,14 +4,12 @@ import android.app.Application
 import android.content.Context
 import com.bandhu.myapplication.database.RoomRepository
 import com.bandhu.myapplication.feature.post.model.PostResponse
-import com.bandhu.myapplication.retrofit.DefaultResponse
 import com.bandhu.myapplication.service.RemoteApiService
 import com.bandhu.myapplication.utill.NetworkUtils
 import com.example.ride.retrofit.NetworkModule
-import com.example.ride.retrofit.RemoteApiGeneralResponse
-import com.example.ride.retrofit.RetroHelper
+import com.bandhu.myapplication.retrofit.RemoteApiGeneralResponse
+import com.bandhu.myapplication.retrofit.RetroHelper
 import kotlinx.coroutines.flow.flow
-import retrofit2.http.Query
 import timber.log.Timber
 import java.net.UnknownHostException
 

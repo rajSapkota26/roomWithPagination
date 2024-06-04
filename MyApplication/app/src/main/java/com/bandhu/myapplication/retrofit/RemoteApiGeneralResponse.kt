@@ -1,4 +1,4 @@
-package com.example.ride.retrofit
+package com.bandhu.myapplication.retrofit
 
 class RemoteApiGeneralResponse<T>(
     var status: Status,

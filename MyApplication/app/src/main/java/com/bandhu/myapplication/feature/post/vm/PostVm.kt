@@ -13,14 +13,12 @@ import com.bandhu.myapplication.database.RoomRepository
 import com.bandhu.myapplication.feature.post.model.PostPagingSource
 import com.bandhu.myapplication.feature.post.model.PostResponse
 import com.bandhu.myapplication.repository.RemoteRepository
-import com.example.ride.retrofit.RemoteApiGeneralResponse
+import com.bandhu.myapplication.retrofit.RemoteApiGeneralResponse
 import kotlinx.coroutines.launch
 
 class PostVm(
-    private val application: Application,
     private val appDatabase: AppDatabase,
-    private val remoteRepository: RemoteRepository,
-    private val roomRepository: RoomRepository
+    private val remoteRepository: RemoteRepository
 ) : ViewModel() {
 
     var data = Pager(
@@ -50,15 +48,13 @@ class PostVm(
 
 }
 
-class PostViewModelFactory(
-    private val application: Application, private val appDatabase: AppDatabase,
-    private val remoteRepository: RemoteRepository,
-    private val roomRepository: RoomRepository
+class PostViewModelFactory( private val appDatabase: AppDatabase,
+    private val remoteRepository: RemoteRepository
 ) : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(PostVm::class.java)) {
             @Suppress("UNCHECKED_CAST")
-            return PostVm(application, appDatabase, remoteRepository, roomRepository) as T
+            return PostVm(appDatabase, remoteRepository) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }
